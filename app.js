@@ -20,7 +20,9 @@ const initializeDbAndServer = async () => {
       driver: sqlite3.Database,
     });
 
-    app.listen(3000, () => console.log("Server Running at http://localhost/"));
+    app.listen(3000, () =>
+      console.log("Server Running at http://localhost:3000/")
+    );
   } catch (error) {
     console.log(`DB Error: ${error.message}`);
     process.exit(1);
@@ -123,7 +125,7 @@ app.get("/states/:stateId/", authenticateToken, async (request, response) => {
 });
 
 app.get(
-  "/district/:districtId/",
+  "/districts/:districtId/",
   authenticateToken,
   async (request, response) => {
     const { districtId } = request.params;
@@ -156,7 +158,7 @@ app.delete(
   async (request, response) => {
     const { districtId } = request.params;
     const deleteDistrictQuery = `
-    SELECT FROM
+    DELETE FROM
         district
     WHERE
         district_id = ${districtId}
@@ -199,7 +201,7 @@ app.put(
 );
 
 app.get(
-  "/states/:stateId/states/",
+  "/states/:stateId/stats/",
   authenticateToken,
   async (request, response) => {
     const { stateId } = request.params;
